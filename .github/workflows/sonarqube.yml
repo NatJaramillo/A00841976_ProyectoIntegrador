@@ -1,0 +1,44 @@
+name: SonarQube Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  sonarqube:
+    name: SonarQube Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install g++
+        run: sudo apt-get install g++ -y
+
+      - name: Download and run build-wrapper
+        run: |
+          wget https://binaries.sonarsource.com/Distribution/sonar-build-wrapper/build-wrapper-linux-x86.zip
+          unzip build-wrapper-linux-x86.zip
+          ./build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir bw-output g++ -std=c++11 -o ejecutable main.cpp Cliente.cpp Factura.cpp
+
+      - name: Download SonarScanner
+        run: |
+          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+          unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+          mv sonar-scanner-5.0.1.3006-linux sonar-scanner
+
+      - name: Run SonarScanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          ./sonar-scanner/bin/sonar-scanner \
+            -Dsonar.projectKey=A00841976_ProyectoIntegrador \
+            -Dsonar.sources=. \
+            -Dsonar.cfamily.build-wrapper-output=bw-output \
+            -Dsonar.host.url=https://sonarqube.felipecastillorendon.online \
+            -Dsonar.login=$SONAR_TOKEN
