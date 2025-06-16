@@ -20,11 +20,11 @@ jobs:
       - name: Install g++
         run: sudo apt-get install g++ -y
 
-      - name: Download and run build-wrapper (official mirror)
+      - name: Download and run build-wrapper
         run: |
-          curl -sSL -o build-wrapper-linux-x86.zip https://github.com/SonarSource/sonar-build-wrapper/releases/download/8.9.0.203/build-wrapper-linux-x86.zip
-          unzip build-wrapper-linux-x86.zip
-          ./build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir bw-output g++ -std=c++11 -o ejecutable main.cpp Cliente.cpp Factura.cpp
+          curl -sSL -o build-wrapper.zip https://binaries.sonarsource.com/Distribution/sonar-build-wrapper/sonar-build-wrapper-6.56.0.6147-linux.zip
+          unzip build-wrapper.zip
+          ./sonar-build-wrapper-6.56.0.6147-linux/build-wrapper-linux-x86-64 --out-dir bw-output g++ -std=c++11 -o ejecutable main.cpp Cliente.cpp Factura.cpp
 
       - name: Download SonarScanner
         run: |
