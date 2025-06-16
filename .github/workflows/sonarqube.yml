@@ -20,9 +20,9 @@ jobs:
       - name: Install g++
         run: sudo apt-get install g++ -y
 
-      - name: Download and run build-wrapper
+      - name: Download and run build-wrapper (mirror)
         run: |
-          wget https://binaries.sonarsource.com/Distribution/sonar-build-wrapper/build-wrapper-linux-x86.zip
+          curl -sSL -o build-wrapper-linux-x86.zip https://sonarqube.felipecastillorendon.online/static/build-wrapper-linux-x86.zip
           unzip build-wrapper-linux-x86.zip
           ./build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir bw-output g++ -std=c++11 -o ejecutable main.cpp Cliente.cpp Factura.cpp
 
