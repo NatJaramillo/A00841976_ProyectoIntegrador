@@ -24,7 +24,7 @@ jobs:
         run: |
           curl -sSL -o build-wrapper.zip https://binaries.sonarsource.com/Distribution/sonar-build-wrapper/sonar-build-wrapper-6.56.0.6147-linux.zip
           unzip build-wrapper.zip
-          ./sonar-build-wrapper-6.56.0.6147-linux/build-wrapper-linux-x86-64 --out-dir bw-output g++ -std=c++11 -o ejecutable main.cpp Cliente.cpp Factura.cpp
+          ./sonar-build-wrapper-6.56.0.6147-linux/build-wrapper-linux-x86-64 --out-dir bw-output g++ -std=c++11 -o ejecutable Código/main.cpp Código/Cliente.cpp Código/Factura.cpp
 
       - name: Download SonarScanner
         run: |
@@ -38,7 +38,7 @@ jobs:
         run: |
           ./sonar-scanner/bin/sonar-scanner \
             -Dsonar.projectKey=A00841976_ProyectoIntegrador \
-            -Dsonar.sources=. \
+            -Dsonar.sources=Código \
             -Dsonar.cfamily.build-wrapper-output=bw-output \
             -Dsonar.host.url=https://sonarqube.felipecastillorendon.online \
             -Dsonar.login=$SONAR_TOKEN
